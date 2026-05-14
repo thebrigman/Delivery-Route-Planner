@@ -1,0 +1,22 @@
+import csv
+
+class nonsense:
+    packages = {}
+
+    @classmethod
+    def addById(cls, id : str):
+        with open("WGUPS Package File.csv", newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                if row["PackageID"] == id:
+                    cls.packages.update({row["PackageID"]: {"address": row["Address"], "city": row["City"],
+                                                    "deadline": row["Delivery Deadline"], "weight": row["Weight KILO"],
+                                                    "note": row["page 1 of 1PageSpecial Notes"]}})
+
+    @classmethod
+    def readById(cls, id : str):
+        return cls.packages[id]
+
+    @classmethod
+    def readAll(cls):
+        return cls.packages
