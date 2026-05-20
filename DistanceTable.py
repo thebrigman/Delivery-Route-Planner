@@ -7,6 +7,12 @@ class DistanceTable:
         self.load_addresses()
         self.load_grid()
 
+    def __str__(self):
+        the_grid = ""
+        for i, row in enumerate(self.grid):
+            the_grid = the_grid + f"{self.addresses[i] + ": "}{row}\n"
+        return the_grid
+
     def load_addresses(self):
         with open("WGUPS Distance Table.csv", newline="") as f:
             reader = csv.DictReader(f)

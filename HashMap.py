@@ -33,3 +33,9 @@ class HashMap:
 
     def get_map(self):
         return self.map
+
+    def keys(self):
+        keys = []
+        for i in range(self.size * self.bucket_size):
+            keys.append(i)
+        return keys
