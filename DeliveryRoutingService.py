@@ -1,23 +1,18 @@
 import csv
-import math
 
 from DistanceTable import DistanceTable
 from HashMap import HashMap
 from Package import Package
-from Truck import Truck
+
 
 class DeliveryRoutingService:
-
-    def __init__(self):
-        self.hash_map = HashMap()
-        self.truck1 = Truck()
-        self.truck2 = Truck()
-        self.truck3 = Truck()
+    def __init__(self, trucks):
         self.distance_table = DistanceTable()
+        self.hash_map = HashMap()
+        self.trucks = trucks
         self.distances = []
         self.visited = []
         self.current = 0
-
 
     def add_packages_to_map(self):
         with open("WGUPS Package File.csv", newline="") as f:
@@ -28,13 +23,18 @@ class DeliveryRoutingService:
                                     row["Weight KILO"], row["Delivery Deadline"], None)
                 self.hash_map.put(id_to_int, package)
 
-    def load_truck1(self):
-        with open("truck1.csv", newline="") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                id_to_int = int(row["PackageID"])
-                self.truck1.load_package_id(id_to_int)
-        return self.truck1.packages
+    # def load_truck(self,):
+    #     with open("truck1.csv", newline="") as f:
+    #         reader = csv.DictReader(f)
+    #         for row in reader:
+    #             id_to_int = int(row["PackageID"])
+    #             self.truck.load_package_id(id_to_int)
+    #     return self.truck.packages
+
+    def load_truck(self, truck, package_ids):
+        for j in package_ids:
+            truck.load_package(self.hash_map.get(j))
+        return truck.packages
 
     def get_time_in_minutes(self, speed, distance):
         time = distance/speed
@@ -42,19 +42,47 @@ class DeliveryRoutingService:
         return time
 
     def print_map(self):
-        for i in self.hash_map.keys():
-            print(self.hash_map.get(i))
+        for row in self.hash_map.get_map():
+            for j, val in enumerate(row):
+                print(row[j])
 
-    def nearest_neighbor(self):
-        id_distance = []
-        for i, row in enumerate(self.hash_map.get_map()):
-            address1 = self.distance_table.addresses[0]
-            for j in row:
-                print(f"{i},{j.get_street()}")
-                address2 = j.get_street()
-                distance = self.distance_table.get_distance(address1, address2)
-                id_distance = [distance, j.get_street()]
-                self.distances.append(id_distance)
-                self.distances.sort()
-        return self.distances
+    def nearest_neighbor(self, truck):
+        distances = []
+        packages = truck.packages
+        address1 = truck.current_address
+        # testing
+        visited = []
+        times = []
+        # testing
+
+        for i in packages:
+            address2 = i.street
+            distance = self.distance_table.get_distance(address1, address2)
+            address_distance_package_id = [distance,  address2, i.ID]
+            distances.append(address_distance_package_id)
+        distances.sort()
+
+        for num, i in enumerate(distances):
+            truck.add_distance(i[0])
+            truck.set_current_address(i[1])
+            self.hash_map.get(i[2]).status = "delivered"
+            print(truck.packages[num])
+
+            print(self.hash_map.get(i[2]).status)
+
+
+            # testing
+            visited.append(truck.current_address)
+            times.append(truck.get_time_as_string())
+
+        print(f"total distance: {truck.distance_traveled} Truck time: {truck.current_time}")
+        print(visited)
+        print(times)
+        return distances
+
+    def get_addresses(self):
+        return self.distance_table.addresses
+
+    def get_grid(self):
+        return self.distance_table.grid
 

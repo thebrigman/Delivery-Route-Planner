@@ -3,7 +3,8 @@ from datetime import datetime, time, timedelta
 
 class Truck:
 
-    def __init__(self, hour=0, minute=0, second=0):
+    def __init__(self, id, hour=0, minute=0, second=0):
+        self.truck_id = id
         self.mph = 18
         self.packages = []
         self.distance_traveled = 0
@@ -19,8 +20,8 @@ class Truck:
                 f"current_address: {self.current_address}\n"
                 f"package ids: {self.packages}")
 
-    def load_package_id(self, id):
-        self.packages.append(id)
+    def load_package(self, package):
+        self.packages.append(package)
 
     def get_package_by_id(self, num):
         for i in self.packages:
@@ -48,3 +49,6 @@ class Truck:
         for i in self.packages:
             print(f"[{i}]\n")
         return None
+
+    def get_time_as_string(self):
+        return self.current_time.strftime("%I:%M:%S:%p")
