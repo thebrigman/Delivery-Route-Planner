@@ -14,13 +14,15 @@ trucks = [truck1, truck2, truck3]
 service = DeliveryRoutingService(trucks)
 
 service.add_packages_to_map()
-addresses = service.get_addresses()
-grid = service.get_grid()
 
 service.load_truck(truck2, truck2_packages)
-
-
-print(f"distance from address {addresses[2]} to address {addresses[3]} is {grid[2][3]} {service.distance_table.get_distance(addresses[2], addresses[3])}")
-
+print(truck2)
 print(service.nearest_neighbor(truck2))
+print(truck2)
+
+for row in service.hash_map.get_map():
+    for column in row:
+        if column.status == "delivered":
+            print(f"{column.ID}: {column.status} {column.delivery_time}")
+
 

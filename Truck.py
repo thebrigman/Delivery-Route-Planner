@@ -12,13 +12,13 @@ class Truck:
         self.current_address = "4001 S 700 E"
 
     def __str__(self):
-        the_packages = ""
-        # for i in self.packages:
-            # the_packages = the_packages + f"{i.get_id()}" + ", "
+        package_ids = ""
+        for i in self.packages:
+            package_ids = f"{package_ids}{i.ID}, "
         return (f"distance_traveled: {self.distance_traveled}\n"
                 f"current_time: {self.current_time}\n"
                 f"current_address: {self.current_address}\n"
-                f"package ids: {self.packages}")
+                f"package ids: {package_ids}")
 
     def load_package(self, package):
         self.packages.append(package)
@@ -34,9 +34,6 @@ class Truck:
         to_minutes = time_traveled * 60.0
         self.update_time(to_minutes)
         self.distance_traveled += distance
-
-    def set_current_address(self, address: str):
-        self.current_address = address
 
     def update_time(self, num = 0):
         dummy_date = datetime(2000,1, 1, 8, 0, 0)
