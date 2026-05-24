@@ -1,11 +1,11 @@
-DISTANCE BETWEEN HUBS IN MILES,Address,4001 S 700 E,1060 W Dalton Ave S,1330 S 2100 S,1488 W 4800 S,177 W Price Ave,195 W Oakland Ave,2010 W 500 S,2300 W Parkway Blvd,233 N Canyon Rd,2530 S 500 E,2600 W Taylorsville Blvd,2835 S Main St,300 S State St,3060 S Lester St,3148 S 1100 W,3365 S 900 W,3575 W Valley Central Station bus Loop,3595 S Main St,380 W 2880 S,410 S State St,4300 S 1300 E,4580 S 2300 E,5025 S State St,5100 S 2700 W,5383 S 900 E #104,600 E 900 S,6351 S 900 E
+DISTANCE BETWEEN HUBS IN MILES,Address,4001 S 700 E,1060 W Dalton Ave,1330 E 2100 S,1488 W 4800 S,177 W Price Ave,195 W Oakland Ave,2010 W 500 S,2300 W Parkway Blvd,233 N Canyon Rd,2530 S 500 E,2600 W Taylorsville Blvd,2835 S Main St,300 S State St,3060 S Lester St,3148 S 1100 W,3365 S 900 W,3575 W Valley Central Station bus Loop,3595 S Main St,380 W 2880 S,410 S State St,4300 S 1300 E,4580 S 2300 E,5025 S State St,5100 S 2700 W,5383 S 900 E #104,600 E 900 S,6351 S 900 E
 "Western Governors University
 4001 South 700 East, 
 Salt Lake City, UT 84107",4001 S 700 E,0,,,,,,,,,,,,,,,,,,,,,,,,,,
 "International Peace Gardens
- 1060 Dalton Ave S",1060 W Dalton Ave S,7.2,0,,,,,,,,,,,,,,,,,,,,,,,,,
+ 1060 Dalton Ave S",1060 W Dalton Ave,7.2,0,,,,,,,,,,,,,,,,,,,,,,,,,
 "Sugar House Park
- 1330 2100 S",1330 S 2100 S,3.8,7.1,0,,,,,,,,,,,,,,,,,,,,,,,,
+ 1330 2100 S",1330 E 2100 S,3.8,7.1,0,,,,,,,,,,,,,,,,,,,,,,,,
 "Taylorsville-Bennion Heritage City Gov Off
  1488 4800 S",1488 W 4800 S,11,6.4,9.2,0,,,,,,,,,,,,,,,,,,,,,,,
 "Salt Lake City Division of Health Services 

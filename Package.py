@@ -1,5 +1,5 @@
 class Package:
-    def __init__(self, ID, street, city, state, zip_code, weight, deadline, status):
+    def __init__(self, ID, street, city, state, zip_code, weight, deadline, notes, status):
         self.ID = ID
         self.street = street
         self.city = city
@@ -8,6 +8,7 @@ class Package:
         self.weight = weight
         self.status = status
         self.deadline = deadline
+        self.notes = notes
         self.delivery_time = None
 
     def __str__(self):
@@ -19,7 +20,8 @@ class Package:
                 f"Weight:{self.weight}\n"
                 f"Deadline:{self.deadline}\n"
                 f"Status:{self.status}\n"
-                f"Delivery time:{self.delivery_time}")
+                f"Delivery time:{self.delivery_time}"
+                f"Notes:{self.notes}")
 
 
     def get_street(self):

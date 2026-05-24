@@ -4,7 +4,7 @@ from datetime import datetime, time, timedelta
 class Truck:
 
     def __init__(self, id, hour=0, minute=0, second=0):
-        self.truck_id = id
+        self.ID = id
         self.mph = 18
         self.packages = []
         self.distance_traveled = 0
