@@ -2,34 +2,31 @@
 class HashMap:
     def __init__(self):
         self.size = 10
-        self.map = [None] * self.size
+        self.table = [None] * self.size
         self.bucket_size = 4
 
-    def get_hash(self, key: int) -> int:
+    def __get_hash(self, key: int) -> int:
         index = key % self.size
         return index
 
     def put(self, key, value):
-        bucket = self.get_hash(key)
+        bucket = self.__get_hash(key)
 
-        if self.map[bucket] is None:
-            self.map[bucket] = [None] * self.bucket_size
+        if self.table[bucket] is None:
+            self.table[bucket] = [None] * self.bucket_size
 
         for i in range(self.bucket_size):
-            if self.map[bucket][i] is None:
-                self.map[bucket][i] = value
+            if self.table[bucket][i] is None:
+                self.table[bucket][i] = value
                 break
         return
 
     def get(self, key: int):
-        bucket = self.get_hash(key)
+        bucket = self.__get_hash(key)
 
-        if self.map[bucket] is not None:
-            for i in self.map[bucket]:
+        if self.table[bucket] is not None:
+            for i in self.table[bucket]:
                 if i is not None:
-                    if i.get_id() == key:
+                    if i.package_id == key:
                         return i
         return None
-
-    def get_map(self):
-        return self.map
