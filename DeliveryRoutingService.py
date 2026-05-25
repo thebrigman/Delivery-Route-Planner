@@ -29,12 +29,12 @@ class DeliveryRoutingService:
             package.status = "en route"
         return truck.packages
 
-    # def go_back_to_hub(self, truck):
-    #     address1 = truck.current_address
-    #     address2 = self.distance_table.addresses[0]
-    #     distance = self.distance_table.get_distance(address1, address2)
-    #     truck.add_distance(distance)
-    #     truck.current_address = address2
+    def go_back_to_hub(self, truck):
+        address1 = truck.current_address
+        address2 = self.distance_table.addresses[0]
+        distance = self.distance_table.get_distance(address1, address2)
+        truck.add_distance(distance)
+        truck.current_address = address2
 
     def get_time_in_minutes(self, speed, distance):
         time = distance/speed
@@ -44,8 +44,24 @@ class DeliveryRoutingService:
     def nearest_neighbor(self, truck):
 
         while len(truck.packages) > 0:
+
             distances = self.__get_distances(truck)
             distance, address2, package_id = distances[0]
+
+            if package_id == 9:
+                if truck.current_time > time(10, 20, 00):
+                    address2 = "410 S State St"
+                    package = self.hash_map.get(package_id)
+                    package.street = address2
+                    distance = self.distance_table.get_distance(truck.current_address, package.street)
+                elif len(truck.packages) > 1:
+                    distance, address2, package_id = distances[1]
+                else:
+                    self.hash_map.get(package_id).status = "at hub"
+                    truck.packages.pop()
+                    continue
+
+
             package = self.hash_map.get(package_id)
             truck.current_address = address2
             truck.add_distance(distance)
@@ -59,7 +75,7 @@ class DeliveryRoutingService:
             package.status = "delivered"
             truck.packages.remove(package)
 
-            # print(f"\n---------\nTruckID: {truck.ID}\nID {package.ID}, current address: {truck.current_address} distance: {distance} total distance: {truck.distance_traveled} time: {truck.current_time} deadline: {package.deadline}\nnotes: {package.notes}\n----------")
+            print(f"\n---------\nTruckID: {truck.ID}\nID {package.ID}, current address: {truck.current_address} distance: {distance} total distance: {truck.distance_traveled} time: {truck.current_time} deadline: {package.deadline}\nnotes: {package.notes}\n----------")
 
         return truck.packages
 
@@ -75,6 +91,14 @@ class DeliveryRoutingService:
         distances.sort()
 
         return distances
+    def get_remaining_undelivered_packages(self):
+        undelivered_packages = []
+        for row in self.hash_map.get_map():
+            for column in row:
+                if column.status == "at hub":
+                    undelivered_packages.append(column.ID)
+                    print(f"{column.ID}: {column.status} {column.delivery_time}")
+        return undelivered_packages
 
     def __test_EOD_and_delay_time_and_package_9(self, package: Any | None, truck):
         if package.deadline != "EOD":
@@ -83,13 +107,13 @@ class DeliveryRoutingService:
                 eod_time_1030 = time(10, 30, 00)
                 if truck.current_time > eod_time_1030:
                     print("\033[31mMISSED DEADLINE \033[0m")
-                    print(f"packageID: {package.ID} truck time: {truck.current_time} Deadline: {package.deadline}")
+                    print(f"TruckID: {truck.ID} packageID: {package.ID} truck time: {truck.current_time} Deadline: {package.deadline}")
 
             if package.deadline == "9:00 AM":
                 eod_time_900 = time(9, 00, 00)
                 if truck.current_time > eod_time_900:
                     print("\033[31mMISSED DEADLINE \033[0m")
-                    print(f"packageID: {package.ID} truck time: {truck.current_time} Deadline: {package.deadline}")
+                    print(f"TruckID: {truck.ID} packageID: {package.ID} truck time: {truck.current_time} Deadline: {package.deadline}")
 
         if package.notes == "Delayed on flight---will not arrive to depot until 9:05 am":
             delay_time = time(9, 5,00)
@@ -102,7 +126,7 @@ class DeliveryRoutingService:
 
         if package.status == "delivered":
             print("\033[31mPACKAGE ALREADY DELIVERED\033[0m")
-            print(f"{package.ID}")
+            print(f"Package ID: {package.ID}")
 
     # def load_truck(self,):
     #     with open("truck1.csv", newline="") as f:
