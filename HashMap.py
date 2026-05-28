@@ -1,12 +1,12 @@
 
 class HashMap:
     def __init__(self):
-        self.size = 10
-        self.table = [None] * self.size
+        self.table_size = 10
+        self.table = [None] * self.table_size
         self.bucket_size = 4
 
     def __get_hash(self, key: int) -> int:
-        index = key % self.size
+        index = key % self.table_size
         return index
 
     def put(self, key, value):
@@ -30,3 +30,6 @@ class HashMap:
                     if i.package_id == key:
                         return i
         return None
+
+    def capacity(self):
+        return self.table_size * self.bucket_size
