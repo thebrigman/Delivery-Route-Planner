@@ -1,3 +1,8 @@
+# Package.py - Represents a single WGUPS delivery package.
+# Stores all data fields required by the project: address, deadline, city,
+# zip code, weight, and delivery status including delivery time.
+# Status transitions: "at hub" -> "en route" -> "delivered"
+
 from Color import Color
 
 
@@ -12,7 +17,9 @@ class Package:
         self.status = status
         self.deadline = deadline
         self.notes = notes
+        # Set to None until the package is delivered; updated by nearest_neighbor
         self.delivery_time = None
+        # Set to the truck's departure time when the package is loaded onto a truck
         self.departure_time = None
 
     def __str__(self):
