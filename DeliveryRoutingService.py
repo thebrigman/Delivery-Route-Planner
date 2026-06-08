@@ -38,15 +38,16 @@ class DeliveryRoutingService:
     def load_truck(self, truck, package_ids):
         """
         Loads a list of packages onto a truck by looking each one up in the
-        hash map. Sets status to "en route" and records the truck's current
-        departure time on each package so the UI can determine status at
-        any queried time.
+        hash map. Sets status to "en route", sets the truck_id of the package,
+        and records the truck's current departure time on each package so the
+        UI can determine status at any queried time.
         Time complexity: O(n) where n is the number of package IDs
         """
         for j in package_ids:
             package = self.hash_map.get(j)
             truck.load_package(package)
             package.status = "en route"
+            package.truck_id = truck.truck_id
             package.departure_time = truck.current_time
         return truck.packages
 
@@ -90,6 +91,7 @@ class DeliveryRoutingService:
                     # Package 9 is the last package but address isn't available yet.
                     # Reset to "at hub" so truck 3 picks it up after 10:20 AM.
                     self.hash_map.get(package_id).status = "at hub"
+                    self.hash_map.get(package_id).truck_id = truck.truck_id
                     truck.packages.pop()
                     continue
 

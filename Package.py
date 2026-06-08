@@ -1,6 +1,6 @@
 # Package.py - Represents a single WGUPS delivery package.
 # Stores all data fields required by the project: address, deadline, city,
-# zip code, weight, and delivery status including delivery time.
+# zip code, weight, truck id, and delivery status including delivery time.
 # Status transitions: "at hub" -> "en route" -> "delivered"
 
 from Color import Color
@@ -21,6 +21,8 @@ class Package:
         self.delivery_time = None
         # Set to the truck's departure time when the package is loaded onto a truck
         self.departure_time = None
+        # Set to 'Not assigned yet' until the package is loaded onto a truck
+        self.truck_id = "Not assigned yet"
 
     def __str__(self):
         return (f"ID:{Color.BLUE}{self.package_id}{Color.RESET} "
@@ -33,4 +35,5 @@ class Package:
                 f"Departure time:{Color.BLUE}{self.departure_time}{Color.RESET} "
                 f"Status:{Color.GOLD}{self.status}{Color.RESET} "
                 f"Delivery time:{Color.BLUE}{self.delivery_time}{Color.RESET} "
+                f"Delivery truck:{Color.BLUE}{self.truck_id}{Color.RESET} "
                 f"Notes:{Color.TEAL}{self.notes}{Color.RESET}")
