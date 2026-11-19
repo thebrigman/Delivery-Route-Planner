@@ -1,4 +1,3 @@
-# Student ID: [001352245] - WGUPS Routing Program
 """"
 Entry point for the WGUPS Routing Program.
 Creates the delivery routing service and launches the user interface.
